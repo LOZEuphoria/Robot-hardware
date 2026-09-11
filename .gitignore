@@ -1,0 +1,35 @@
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Training data and model artifacts (keep dataset attribution)
+/dataset/*
+!/dataset/README*.txt
+/checkpoints_floor/
+*.pt
+*.pth
+*.onnx
+
+# Generated video and runtime state
+/outputs_pidnet/
+/voice_motion_control.json
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

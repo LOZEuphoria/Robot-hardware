@@ -1,0 +1,3 @@
+[submodule "PIDNet"]
+	path = PIDNet
+	url = https://github.com/XuJiacong/PIDNet.git
