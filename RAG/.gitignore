@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.cache/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# LLM Models
+*.gguf
+*.bin
+models/
+
+# Local Database & Scraped Data
+*.json
+!test_portal_only.json
+downloads/
+
+# Browser profiles
+ms_browser_profile/
+
+# Logs and test results
+*.log
+*.csv
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

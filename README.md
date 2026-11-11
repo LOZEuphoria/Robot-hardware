@@ -34,7 +34,7 @@ Trước khi chạy camera, chỉnh [config.py](config.py):
 
 - `CAM_ID`: mặc định `0`; ảnh camera `640 × 480`, ảnh đưa vào mô hình `320 × 240`.
 - `PIDNET_MODEL_SIZE`: phải khớp với checkpoint sàn. Cấu hình hiện tại là `pidnet-s`, trong khi chương trình huấn luyện và mô phỏng dùng `pidnet-l`; nếu dùng checkpoint từ cấu hình huấn luyện hiện tại, đổi thành `pidnet-l`.
-- `SEND_TO_ESP_SERIAL`: hiện là `True`; đặt `False` khi chỉ muốn xem kết quả camera. Cổng mặc định `COM5`, baud rate `115200`, tần số gửi `15 Hz`.
+- `SEND_TO_ESP_SERIAL`: hiện là `True`; đặt `False` khi chỉ muốn xem kết quả camera. Cổng mặc định `COM6`, baud rate `115200`, tần số gửi `15 Hz`.
 - Các tham số vùng quan sát, tốc độ và tránh vật cản cũng nằm trong file này.
 
 Camera dùng `checkpoints_floor/pidnet_floor_best.pt` được khai báo trong `pidnet_pid_steering_camera.py`; biến `PIDNET_WEIGHT` trong `config.py` không thay đổi đường dẫn checkpoint của chương trình này.
@@ -68,3 +68,7 @@ Nếu thiếu trọng số Cityscapes tùy chọn, chương trình huấn luyệ
 Thư mục `PIDNet/` là Git submodule của [PIDNet do Jiacong Xu và cộng sự phát triển](https://github.com/XuJiacong/PIDNet), tại commit `4c158cf24ce432f0a8cb43364fae38d93cee0dc3`. Nếu đã clone mà chưa tải submodule, chạy `git submodule update --init --recursive`.
 
 Xem `PIDNet/README.md` sau khi clone, hoặc [tài liệu gốc](https://github.com/XuJiacong/PIDNet/blob/4c158cf24ce432f0a8cb43364fae38d93cee0dc3/README.md) và [giấy phép MIT của PIDNet](https://github.com/XuJiacong/PIDNet/blob/4c158cf24ce432f0a8cb43364fae38d93cee0dc3/LICENSE) để biết cách sử dụng, trích dẫn và điều kiện phân phối mã nguồn này.
+
+## HUFLIT RAG
+
+Mã nguồn trợ lý RAG, corpus, bộ lập chỉ mục Elasticsearch và hướng dẫn chạy nằm trong [RAG/README.md](RAG/README.md). Corpus có thêm văn bản trích xuất từ phụ lục kết quả HIRA Paper 315; PDF gốc nằm trong `RAG/documents/`.

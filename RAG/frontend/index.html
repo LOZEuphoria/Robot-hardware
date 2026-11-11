@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HUFLIT Robot Face</title>
+    <link rel="stylesheet" href="style.css?v=7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="kiosk-container">
+        
+        <div class="face-container" id="face">
+            <div class="eye-wrapper left-wrapper">
+                <div class="eye left-eye"></div>
+            </div>
+            <div class="eye-wrapper right-wrapper">
+                <div class="eye right-eye"></div>
+            </div>
+        </div>
+        
+        <div class="visualizer hidden" id="visualizer">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="subtitles-container">
+            <p id="status-text">Chạm vào màn hình để bắt đầu giao tiếp</p>
+            <p id="subtitle-text" class="hidden"></p>
+        </div>
+
+    </div>
+
+    <button id="btn-reset" class="btn-corner">🔄 Reset</button>
+
+    <script src="script.js?v=7"></script>
+</body>
+</html>

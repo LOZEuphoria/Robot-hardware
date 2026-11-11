@@ -70,13 +70,9 @@ NO_GROUND_BACK_SPEED_SCALE = 0.40
 
 # ESP8266 serial output. Change ESP_SERIAL_PORT if your board uses another COM port.
 SEND_TO_ESP_SERIAL = True
-ESP_SERIAL_PORT = "COM5"
+ESP_SERIAL_PORT = "COM6"
 ESP_SERIAL_BAUD = 115200
 ESP_SERIAL_HZ = 15.0
 ESP_SERIAL_KEEPALIVE_SEC = 0.5
 ESP_SERIAL_DEBUG = False
 ESP_SERIAL_RX_DEBUG = False
-
-# Trang thai tam dung do mic lien tuc cua RAG ghi. Camera la tien trinh duy
-# nhat gui lenh motor xuong ESP, nen khong xay ra tranh chap cong COM.
-VOICE_MOTION_CONTROL_FILE = Path(__file__).resolve().parent / "voice_motion_control.json"

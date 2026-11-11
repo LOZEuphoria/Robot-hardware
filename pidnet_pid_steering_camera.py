@@ -24,12 +24,13 @@ SEG_WIDTH = cfg.SEG_WIDTH
 SEG_HEIGHT = cfg.SEG_HEIGHT
 
 SEND_TO_ESP_SERIAL = getattr(cfg, "SEND_TO_ESP_SERIAL", False)
-ESP_SERIAL_PORT = getattr(cfg, "ESP_SERIAL_PORT", "COM5")
+ESP_SERIAL_PORT = getattr(cfg, "ESP_SERIAL_PORT", "COM6")
 ESP_SERIAL_BAUD = getattr(cfg, "ESP_SERIAL_BAUD", 115200)
 ESP_SERIAL_HZ = getattr(cfg, "ESP_SERIAL_HZ", 10.0)
 ESP_SERIAL_DEBUG = getattr(cfg, "ESP_SERIAL_DEBUG", False)
 ESP_SERIAL_RX_DEBUG = getattr(cfg, "ESP_SERIAL_RX_DEBUG", False)
 ESP_SERIAL_KEEPALIVE_SEC = max(0.1, float(getattr(cfg, "ESP_SERIAL_KEEPALIVE_SEC", 0.5)))
+
 OUTPUT_DIR = cfg.OUTPUT_DIR
 OUTPUT_DIR.mkdir(exist_ok=True)
 
@@ -493,6 +494,7 @@ def main():
     turn_lock_until = 0.0
     turn_until_clear_active = False
     last_turn_clear_at = 0.0
+    last_json_out_signature = None
     
     try:
         while True:
@@ -749,8 +751,6 @@ def main():
                 turn_type = "NORMAL_ADJUSTMENT"
                 motion_mode = "NORMAL"
                 speed_scale = NORMAL_SPEED_SCALE
-            voice_motion_paused = False
-
             left_motor, right_motor = calculate_motor_outputs(steering_val, speed_scale, motion_mode)
             esp_steering_value = steering_val
             if motion_mode in ("AVOIDANCE_TURN", "RECOVERY_TURN"):
@@ -790,13 +790,13 @@ def main():
                 "escape_clear_counter": int(escape_clear_counter),
                 "escape_path_clear": bool(escape_path_clear),
                 "is_avoidance_active": bool(is_avoidance_active),
-                "voice_motion_paused": False,
                 "status": str(status_text)
             }
 
             # Cách 1: Ghi ra file JSON nguyên tử (atomic write) có hỗ trợ fallback cho Windows
             json_file_path = OUTPUT_DIR / "control_output.json"
             temp_file_path = json_file_path.with_suffix(".tmp")
+            json_write_succeeded = False
             try:
                 with open(temp_file_path, "w", encoding="utf-8") as f:
                     json.dump(control_data, f, indent=4)
@@ -817,11 +817,21 @@ def main():
                         os.remove(str(temp_file_path))
                     except OSError:
                         pass
+                json_write_succeeded = True
             except Exception as e:
                 print(f"[ERROR] Ghi file JSON loi: {e}")
 
             # Cách 2: In ra stdout
-            print(f"[JSON_OUT] {json.dumps(control_data)}")
+            json_out_signature = (
+                control_data["direction"],
+                control_data["turn_type"],
+                control_data["motion_mode"],
+                control_data["nav_state"],
+                control_data["obstacle_detected"],
+            )
+            if json_write_succeeded and json_out_signature != last_json_out_signature:
+                print(f"[JSON_OUT] {json.dumps(control_data, ensure_ascii=False)}")
+                last_json_out_signature = json_out_signature
 
             # Cách 3: Gửi UDP socket
             try:
